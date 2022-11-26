@@ -22,3 +22,18 @@ export async function createTicket(enrollmentId: number, ticketTypeId: number, s
     },
   });
 }
+
+export async function updateTicketTypeIncludesHotel(ticketTypeId: number, includesHotel: boolean) {
+  return prisma.ticketType.update({
+    where: { id: ticketTypeId },
+    data: { includesHotel: includesHotel }
+  });
+}
+
+export async function updateTicketTypeIsRomote(ticketTypeId: number, isRemote: boolean) {
+  return prisma.ticketType.update({
+    where: { id: ticketTypeId },
+    data: { isRemote: isRemote }
+  });
+}
+
