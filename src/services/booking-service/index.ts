@@ -10,7 +10,19 @@ async function getBookings(userId: number) {
     throw notFoundError();
   }
 
-  return booking;
+  const result = {
+    id: booking.id,
+    Room: {
+      id: booking.Room.id,
+      name: booking.Room.name,
+      capacity: booking.Room.capacity,
+      hotelId: booking.Room.hotelId,
+      createdAt: booking.Room.createdAt,
+      updatedAt: booking.Room.updatedAt
+    }
+  };
+  
+  return result;
 }
 
 async function postBooking(userId: number, roomId: number) {
@@ -19,7 +31,11 @@ async function postBooking(userId: number, roomId: number) {
   await roomAvailabilityCheck(roomId);
 
   const newBooking = await bookingRepository.createBooking(userId, roomId);
-  return newBooking.id;
+
+  const result = {
+    bookingId: newBooking.id
+  };
+  return result;
 }
 
 async function putBooking(userId: number, roomId: number, bookingId: number) {
@@ -31,7 +47,11 @@ async function putBooking(userId: number, roomId: number, bookingId: number) {
   await roomAvailabilityCheck(roomId);
 
   const updatedBooking = await bookingRepository.updateBooking(bookingId, roomId);
-  return updatedBooking.id;
+
+  const result = {
+    bookingId: updatedBooking.id
+  };
+  return result;
 }
 
 async function bookRoomPermissionCheck(userId: number) {

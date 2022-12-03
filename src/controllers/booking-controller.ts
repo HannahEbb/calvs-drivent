@@ -7,9 +7,13 @@ export async function getBookings(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
 
   try {
-    const booking = bookingService.getBookings(Number(userId));
+    const booking = await bookingService.getBookings(Number(userId));
+   
     return res.status(httpStatus.OK).send(booking);
   } catch (error) {
+    if(error.name === "NotFoundError") {
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    }
     return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
@@ -39,7 +43,7 @@ export async function putBooking(req: AuthenticatedRequest, res: Response) {
   const { bookingId } = req.params;
   const { roomId } = req.body;
 
-  if(!bookingId || !roomId) {
+  if(!Number(bookingId) || !roomId) {
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }
     

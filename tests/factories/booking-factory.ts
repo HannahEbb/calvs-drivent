@@ -1,12 +1,22 @@
 import faker from "@faker-js/faker";
 import { prisma } from "@/config";
-import { TicketStatus } from "@prisma/client";
 
 export async function createGenericBooking(userId: number, roomId: number) {
   return prisma.booking.create({
     data: {
-      userId,
-      roomId
+      userId: userId,
+      roomId: roomId
+    }
+  });
+}
+
+export async function findBookingByUserId(userId: number) {
+  return prisma.booking.findFirst({
+    where: {
+      userId
+    },
+    include: {
+      Room: true
     }
   });
 }
