@@ -11,9 +11,6 @@ export async function getBookings(req: AuthenticatedRequest, res: Response) {
    
     return res.status(httpStatus.OK).send(booking);
   } catch (error) {
-    if(error.name === "NotFoundError") {
-      return res.sendStatus(httpStatus.NOT_FOUND);
-    }
     return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
