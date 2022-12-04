@@ -22,7 +22,7 @@ export async function postBooking(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
   const { roomId } = req.body;
 
-  if(!roomId) {
+  if(!roomId || roomId < 1) {
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }
     
@@ -43,7 +43,7 @@ export async function putBooking(req: AuthenticatedRequest, res: Response) {
   const { bookingId } = req.params;
   const { roomId } = req.body;
 
-  if(!Number(bookingId) || !roomId) {
+  if(!Number(bookingId) || !roomId || Number(bookingId) < 1 || roomId < 1) {
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }
     
